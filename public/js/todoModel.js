@@ -28,12 +28,13 @@ var app = app || {};
 		this.onChanges.forEach(function (cb) { cb(); });
 	};
 
-	app.TodoModel.prototype.addTodo = function (title) {
-		this.todos = this.todos.concat({
-			id: Utils.uuid(),
-			title: title,
-			completed: false
-		});
+    app.TodoModel.prototype.addTodo = function (title, category) {
+        this.todos = this.todos.concat({
+            id: Utils.uuid(),
+            title: title,
+            category: category,
+            completed: false
+        });
 
 		this.inform();
 	};
@@ -68,10 +69,10 @@ var app = app || {};
 		this.inform();
 	};
 
-	app.TodoModel.prototype.save = function (todoToSave, text) {
-		this.todos = this.todos.map(function (todo) {
-			return todo !== todoToSave ? todo : Utils.extend({}, todo, {title: text});
-		});
+    app.TodoModel.prototype.save = function (todoToSave, text, cat) {
+        this.todos = this.todos.map(function (todo) {
+            return todo !== todoToSave ? todo : Utils.extend({}, todo, {title: text}, {category: cat});
+        });
 
 		this.inform();
 	};
