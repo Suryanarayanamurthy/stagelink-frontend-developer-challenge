@@ -21,7 +21,7 @@ var app = app || {};
               <a
                 href="#/category_work"
                 className={classNames({selected: nowShowing === app.CAT_WORK})}>
-                  URGENT
+                  WORK
               </a>
             </li>
             {' '}
@@ -29,7 +29,7 @@ var app = app || {};
               <a
                 href="#/category_personal"
                 className={classNames({selected: nowShowing === app.CAT_PERSONAL})}>
-                  SOON
+                  PERSONAL
               </a>
             </li>
             {' '}
@@ -37,7 +37,7 @@ var app = app || {};
               <a
                 href="#/category_superpersonal"
                 className={classNames({selected: nowShowing === app.CAT_SUPERPERSONAL})}>
-                  ANYTIME
+                  SUPER PERSONAL
               </a>
             </li>
           </ul>

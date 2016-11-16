@@ -14,18 +14,19 @@ var app = app || {};
 	app.TodoItem = React.createClass({
 		handleSubmit: function (event) {
 			var val = this.state.editText.trim();
-			if (val) {
-				this.props.onSave(val);
-				this.setState({editText: val});
+            var cat = this.state.editCategoryText.trim();
+            if (val || cat) {
+                this.props.onSave(val, cat);
+                this.setState({editText: this.props.todo.title, editCategoryText: this.props.todo.category});
 			} else {
 				this.props.onDestroy();
 			}
 		},
 
-		handleEdit: function () {
-			this.props.onEdit();
-			this.setState({editText: this.props.todo.title});
-		},
+        handleEdit: function (event) {
+            this.props.onEdit();
+            this.setState({editText: this.props.todo.title, editCategoryText: this.props.todo.category});
+        },
 
 		handleKeyDown: function (event) {
 			if (event.which === ESCAPE_KEY) {
@@ -42,24 +43,31 @@ var app = app || {};
 			}
 		},
 
-		getInitialState: function () {
-			return {editText: this.props.todo.title};
-		},
+        handleCategoryChange: function (event) {
+            if (this.props.editing) {
+                this.setState({editCategoryText: event.target.value});
+            }
+        },
 
-		/**
-		 * This is a completely optional performance enhancement that you can
-		 * implement on any React component. If you were to delete this method
-		 * the app would still work correctly (and still be very performant!), we
-		 * just use it as an example of how little code it takes to get an order
-		 * of magnitude performance improvement.
-		 */
-		shouldComponentUpdate: function (nextProps, nextState) {
-			return (
-				nextProps.todo !== this.props.todo ||
-				nextProps.editing !== this.props.editing ||
-				nextState.editText !== this.state.editText
-			);
-		},
+        getInitialState: function () {
+            return {editText: this.props.todo.title, editCategoryText: this.props.todo.category};
+        },
+
+        /**
+         * This is a completely optional performance enhancement that you can
+         * implement on any React component. If you were to delete this method
+         * the app would still work correctly (and still be very performant!), we
+         * just use it as an example of how little code it takes to get an order
+         * of magnitude performance improvement.
+         */
+        shouldComponentUpdate: function (nextProps, nextState) {
+            return (
+                nextProps.todo !== this.props.todo ||
+                nextProps.editing !== this.props.editing ||
+                nextState.editText !== this.state.editText ||
+                nextState.editCategoryText !== this.state.editCategoryText
+            );
+        },
 
 		/**
 		 * Safely manipulate the DOM after updating the state when invoking
@@ -91,6 +99,9 @@ var app = app || {};
 						<label onDoubleClick={this.handleEdit}>
 							{this.props.todo.title}
 						</label>
+                        <label onDoubleClick={this.handleEdit}>
+                            {this.props.todo.category}
+                        </label>
 						<button className="destroy" onClick={this.props.onDestroy} />
 					</div>
 					<input
@@ -101,6 +112,11 @@ var app = app || {};
 						onChange={this.handleChange}
 						onKeyDown={this.handleKeyDown}
 					/>
+                        <select value={this.state.EditCategoryText} className="edit" onChange={this.handleCategoryChange} defaultValue={this.props.todo.category} onKeyDown={this.handleKeyDown}>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="superpersonal">Super Personal</option>
+                        </select>
 				</li>
 			);
 		}
