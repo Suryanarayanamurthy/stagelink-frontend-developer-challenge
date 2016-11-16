@@ -6,7 +6,7 @@ install latest [npm and nodejs](https://nodejs.org/en/download/package-manager/)
 2. cd into the location
 3. execute `npm install`
 4. execute `npm start`
-5. open browser and goto localhost:4000
+5. open browser and goto [`localhost:4000/`](http://localhost:4000/#/)
 
 
 Stagelink Frontend Developer programming challenge
